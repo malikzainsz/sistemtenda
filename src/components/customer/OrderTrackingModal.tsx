@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { formatRupiah, formatIndonesianDate, getCategoryLabel } from '../../utils/formatters';
-import { Search, CheckCircle, Clock, Upload, Printer, FileText, ArrowLeft, CreditCard, AlertCircle } from 'lucide-react';
+import { Search, CheckCircle, Clock, Upload, Printer, FileText, ArrowLeft, CreditCard, AlertCircle, Copy, Check } from 'lucide-react';
 
 export const OrderTrackingView: React.FC = () => {
   const {
@@ -14,8 +14,8 @@ export const OrderTrackingView: React.FC = () => {
   } = useApp();
 
   const [searchCode, setSearchCode] = useState(activeTrackingOrderId || 'ORD-001');
-  const [proofUrlInput, setProofUrlInput] = useState('');
-  const [selectedFileSim, setSelectedFileSim] = useState<string | null>(null);
+  const [copiedBank, setCopiedBank] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const currentOrder = orders.find(o => o.id.toLowerCase() === (activeTrackingOrderId || searchCode).trim().toLowerCase()) || orders[0];
 
@@ -29,13 +29,30 @@ export const OrderTrackingView: React.FC = () => {
     }
   };
 
-  const handleSimulateUpload = (e: React.FormEvent) => {
+  const handleCopyAccount = () => {
+    navigator.clipboard.writeText('8840192819');
+    setCopiedBank(true);
+    showToast('Nomor rekening BCA 884-019-2819 berhasil disalin!');
+    setTimeout(() => setCopiedBank(false), 2500);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleConfirmUpload = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentOrder) return;
-    const url = proofUrlInput || 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=400&q=80';
-    uploadPaymentProof(currentOrder.id, url);
-    setProofUrlInput('');
-    setSelectedFileSim(null);
+    const finalProof = previewImage || 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=400&q=80';
+    uploadPaymentProof(currentOrder.id, finalProof);
+    setPreviewImage(null);
   };
 
   return (
@@ -59,25 +76,49 @@ export const OrderTrackingView: React.FC = () => {
           </p>
         </div>
 
-        {/* Search Order Bar */}
-        <form onSubmit={handleSearch} className="flex items-center gap-2 w-full sm:w-auto">
-          <div className="relative flex-1 sm:w-60">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-            <input
-              type="text"
-              placeholder="Cari Kode e.g. ORD-001"
-              value={searchCode}
-              onChange={(e) => setSearchCode(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs font-mono uppercase bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold"
-            />
+        {/* Search Order Bar & Quick Switcher */}
+        <div className="flex flex-col items-end gap-2 w-full sm:w-auto">
+          <form onSubmit={handleSearch} className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="relative flex-1 sm:w-60">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+              <input
+                type="text"
+                placeholder="Cari Kode e.g. ORD-001"
+                value={searchCode}
+                onChange={(e) => setSearchCode(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 text-xs font-mono uppercase bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 font-semibold"
+              />
+            </div>
+            <button
+              type="submit"
+              className="px-4 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              Lacak
+            </button>
+          </form>
+
+          {/* Quick select order pills */}
+          <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+            <span className="text-[10px]">Contoh:</span>
+            {orders.slice(0, 4).map(o => (
+              <button
+                key={o.id}
+                type="button"
+                onClick={() => {
+                  setSearchCode(o.id);
+                  setActiveTrackingOrderId(o.id);
+                }}
+                className={`px-2 py-0.5 rounded font-mono font-bold transition-all cursor-pointer ${
+                  currentOrder?.id === o.id
+                    ? 'bg-amber-500 text-slate-950 shadow-2xs'
+                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                {o.id}
+              </button>
+            ))}
           </div>
-          <button
-            type="submit"
-            className="px-4 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-colors whitespace-nowrap shrink-0"
-          >
-            Lacak
-          </button>
-        </form>
+        </div>
       </div>
 
       {currentOrder ? (
@@ -252,8 +293,21 @@ export const OrderTrackingView: React.FC = () => {
               {/* Rekening Tujuan Transfer */}
               <div className="mt-5 p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs">
                 <div className="text-[11px] text-slate-400 mb-1">Transfer Bank Rekening Resmi:</div>
-                <div className="font-bold text-amber-300 font-mono text-sm">BCA: 884-019-2819</div>
-                <div className="text-slate-300 text-[11px]">a.n. PT SewaPro Event Mandiri</div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-amber-300 font-mono text-sm">BCA: 884-019-2819</div>
+                    <div className="text-slate-300 text-[11px]">a.n. PT SewaPro Event Mandiri</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyAccount}
+                    className="p-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 transition-colors flex items-center gap-1 text-[11px] cursor-pointer"
+                    title="Salin Nomor Rekening"
+                  >
+                    {copiedBank ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedBank ? 'Tersalin' : 'Salin'}</span>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -273,30 +327,63 @@ export const OrderTrackingView: React.FC = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1.5">
-                    <CheckCircle className="w-4 h-4" />
-                    <span>Bukti transfer telah dikirim</span>
+                  <div className="text-[11px] text-emerald-700 font-semibold flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Bukti transfer telah dikirim</span>
+                    </span>
+                    <button
+                      onClick={() => uploadPaymentProof(currentOrder.id, '')}
+                      className="text-slate-500 hover:text-red-600 text-[10px] underline cursor-pointer"
+                    >
+                      Unggah Ulang
+                    </button>
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSimulateUpload} className="space-y-3">
+                <form onSubmit={handleConfirmUpload} className="space-y-3">
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Unggah foto struk transfer ATM, mobile banking, atau QRIS untuk verifikasi DP otomatis oleh tim admin.
                   </p>
                   
-                  <div className="p-4 border-2 border-dashed border-slate-200 rounded-xl text-center hover:bg-slate-50 transition-colors cursor-pointer">
-                    <Upload className="w-6 h-6 text-slate-400 mx-auto mb-1.5" />
-                    <span className="text-xs font-semibold text-slate-700 block">
-                      Klik untuk simulasi unggah foto struk
-                    </span>
-                    <span className="text-[10px] text-slate-400 block mt-0.5">
-                      JPG, PNG, atau screenshot m-Banking
-                    </span>
-                  </div>
+                  {previewImage ? (
+                    <div className="space-y-2">
+                      <div className="aspect-[4/3] rounded-xl overflow-hidden border border-amber-300 bg-slate-50 relative">
+                        <img
+                          src={previewImage}
+                          alt="Pratinjau Bukti"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setPreviewImage(null)}
+                        className="text-[11px] text-red-600 hover:underline block"
+                      >
+                        Batal ganti foto
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="p-4 border-2 border-dashed border-slate-200 rounded-xl text-center hover:bg-slate-50 transition-colors cursor-pointer block">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                      <Upload className="w-6 h-6 text-slate-400 mx-auto mb-1.5" />
+                      <span className="text-xs font-semibold text-slate-700 block">
+                        Pilih foto struk dari perangkat
+                      </span>
+                      <span className="text-[10px] text-slate-400 block mt-0.5">
+                        JPG, PNG, atau tangkapan layar m-Banking
+                      </span>
+                    </label>
+                  )}
 
                   <button
                     type="submit"
-                    className="w-full py-2.5 px-4 text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-xl shadow-sm transition-all whitespace-nowrap shrink-0 text-center"
+                    className="w-full py-2.5 px-4 text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 active:bg-amber-700 rounded-xl shadow-sm transition-all whitespace-nowrap shrink-0 text-center cursor-pointer"
                   >
                     Kirim Bukti Pembayaran
                   </button>

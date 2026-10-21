@@ -75,14 +75,23 @@ export const ScheduleManagerView: React.FC = () => {
         {/* Left Column: Interactive Month Calendar (2 cols) */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
           <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <CalendarIcon className="w-5 h-5 text-amber-600" />
-              <h4 className="text-base font-bold text-slate-900">
-                Oktober 2026
-              </h4>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="w-5 h-5 text-amber-600" />
+                <h4 className="text-base font-bold text-slate-900">
+                  Oktober 2026
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedDate('2026-10-24')}
+                className="text-[11px] font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md cursor-pointer"
+              >
+                Ke Tanggal Acara
+              </button>
             </div>
-            <div className="flex items-center gap-1 text-xs text-slate-500">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block mr-1"></span>
+            <div className="flex items-center gap-2 text-xs text-slate-500">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
               <span>Ada Acara Terjadwal</span>
             </div>
           </div>
