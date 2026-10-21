@@ -1,0 +1,6 @@
+{
+  "name": "SewaPro - Manajemen Sewa Tenda, Plafon & Sound",
+  "description": "Sistem informasi manajemen sewa tenda, dekorasi plafon, dan sound system lengkap dengan katalog pesanan, jadwal unit, pembayaran, galeri acara, evaluasi, dan laporan bisnis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
