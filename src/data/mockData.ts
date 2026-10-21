@@ -18,7 +18,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
       'Kipas Blower embun / Mist Fan 2 unit',
       'Instalasi & bongkar oleh tim teknis profesional'
     ],
-    imageUrl: '/src/assets/images/service_tenda_acara_1792526784809.jpg',
+    imageUrl: '/images/service_tenda_acara.jpg',
     popular: true,
   },
   {
@@ -38,7 +38,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
       'Lampu fairy light LED kelap-kelip tematik',
       'Bungkus tiang tenda dekoratif senada'
     ],
-    imageUrl: '/src/assets/images/service_plafon_dekorasi_1792526784849.jpg',
+    imageUrl: '/images/service_plafon_dekorasi.jpg',
     popular: true,
   },
   {
@@ -58,7 +58,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
       '2 unit Floor Monitor Stage untuk band / MC',
       'Operator audio berpengalaman standby sepanjang acara'
     ],
-    imageUrl: '/src/assets/images/service_sound_system_1792526784016.jpg',
+    imageUrl: '/images/service_sound_system.jpg',
     popular: true,
   },
   {
@@ -78,7 +78,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
       '100 Kursi Futura bersarung + 8 Meja VIP bulat',
       'Free biaya survey lokasi dan konsultasi tata letak'
     ],
-    imageUrl: '/src/assets/images/hero_event_setup_1792526782776.jpg',
+    imageUrl: '/images/hero_event_setup.jpg',
     popular: true,
   }
 ];
@@ -247,7 +247,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     id: 'gal-1',
     title: 'Resepsi Pernikahan Megah Taman Menteng',
     category: 'tenda',
-    imageUrl: '/src/assets/images/service_tenda_acara_1792526784809.jpg',
+    imageUrl: '/images/service_tenda_acara.jpg',
     eventDate: 'Oktober 2026',
     location: 'Menteng, Jakarta Pusat',
     description: 'Instalasi tenda semi-roder putih bersih dengan banquet long tables dan pencahayaan taman hangat.',
@@ -256,7 +256,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     id: 'gal-2',
     title: 'Plafon Draping Chandelier Pelaminan Royal',
     category: 'plafon',
-    imageUrl: '/src/assets/images/service_plafon_dekorasi_1792526784849.jpg',
+    imageUrl: '/images/service_plafon_dekorasi.jpg',
     eventDate: 'September 2026',
     location: 'Grand Ballroom, Jakarta',
     description: 'Dekorasi plafon kain sifon champagne berombak dengan lampu gantung kristal 3 susun.',
@@ -265,7 +265,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     id: 'gal-3',
     title: 'Konser Akustik & Gala Dinner Korporat',
     category: 'sound',
-    imageUrl: '/src/assets/images/service_sound_system_1792526784016.jpg',
+    imageUrl: '/images/service_sound_system.jpg',
     eventDate: 'Oktober 2026',
     location: 'TB Simatupang Convention',
     description: 'Sistem tata suara digital line array 10.000W dengan stage monitor dan operator standby.',
@@ -274,7 +274,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     id: 'gal-4',
     title: 'All-in Wedding Pavilion & Live Stage',
     category: 'paket',
-    imageUrl: '/src/assets/images/hero_event_setup_1792526782776.jpg',
+    imageUrl: '/images/hero_event_setup.jpg',
     eventDate: 'Agustus 2026',
     location: 'Bogor Heritage Hall',
     description: 'Kombinasi lengkap tenda VIP, plafon kain draping berkilau, dan panggung audio untuk 500 tamu.',
@@ -283,7 +283,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     id: 'gal-5',
     title: 'Dekorasi Plafon Serut Pengantin Minimalis Modern',
     category: 'plafon',
-    imageUrl: '/src/assets/images/service_plafon_dekorasi_1792526784849.jpg',
+    imageUrl: '/images/service_plafon_dekorasi.jpg',
     eventDate: 'Juli 2026',
     location: 'Bekasi Barat',
     description: 'Plafon dekorasi bertingkat dengan paduan warna putih gading dan aksen emas elegan.',
@@ -292,7 +292,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     id: 'gal-6',
     title: 'Panggung Sound System Seminar Akbar',
     category: 'sound',
-    imageUrl: '/src/assets/images/service_sound_system_1792526784016.jpg',
+    imageUrl: '/images/service_sound_system.jpg',
     eventDate: 'Juni 2026',
     location: 'Auditorium UI Depok',
     description: 'Kejernihan vokal prima untuk pembicara nasional dengan mikrofon UHF anti-interferensi.',

@@ -12,7 +12,7 @@ export const GalleryManagerView: React.FC = () => {
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('Oktober 2026');
   const [desc, setDesc] = useState('');
-  const [imageUrl, setImageUrl] = useState('/src/assets/images/hero_event_setup_1792526782776.jpg');
+  const [imageUrl, setImageUrl] = useState('/images/hero_event_setup.jpg');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export const GalleryManagerView: React.FC = () => {
     addGalleryItem({
       title,
       category,
-      imageUrl: imageUrl || '/src/assets/images/service_tenda_acara_1792526784809.jpg',
+      imageUrl: imageUrl || '/images/service_tenda_acara.jpg',
       location: location || 'Jakarta',
       eventDate: date,
       description: desc || 'Dokumentasi instalasi acara SewaPro.',

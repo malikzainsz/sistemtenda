@@ -10,7 +10,7 @@ export const HeroSection: React.FC = () => {
       {/* Background Hero Image with measured scrim */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/hero_event_setup_1792526782776.jpg"
+          src="/images/hero_event_setup.jpg"
           alt="Dekorasi Tenda dan Acara Mewah SewaPro"
           className="w-full h-full object-cover object-center opacity-40"
           referrerPolicy="no-referrer"

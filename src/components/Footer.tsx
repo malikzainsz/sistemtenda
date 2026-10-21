@@ -3,7 +3,14 @@ import { useApp } from '../context/AppContext';
 import { Phone, Mail, MapPin, Heart, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { setActiveCustomerTab, setUserRole, setShowWorkflowModal } = useApp();
+  const {
+    userRole,
+    setUserRole,
+    setActiveCustomerTab,
+    setShowWorkflowModal,
+    services,
+    setSelectedServiceForBooking
+  } = useApp();
 
   return (
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-800 text-xs no-print">
@@ -33,32 +40,60 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <button
-                  onClick={() => setActiveCustomerTab('catalog')}
-                  className="hover:text-amber-400 transition-colors"
+                  onClick={() => {
+                    if (userRole === 'admin') setUserRole('customer');
+                    setActiveCustomerTab('catalog');
+                    const tendaSrv = services.find(s => s.category === 'tenda');
+                    if (tendaSrv) setSelectedServiceForBooking(tendaSrv);
+                    const el = document.getElementById('catalog-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hover:text-amber-400 transition-colors cursor-pointer text-left"
                 >
                   Sewa Tenda Kanopi & Semi-Roder
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setActiveCustomerTab('catalog')}
-                  className="hover:text-amber-400 transition-colors"
+                  onClick={() => {
+                    if (userRole === 'admin') setUserRole('customer');
+                    setActiveCustomerTab('catalog');
+                    const plafonSrv = services.find(s => s.category === 'plafon');
+                    if (plafonSrv) setSelectedServiceForBooking(plafonSrv);
+                    const el = document.getElementById('catalog-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hover:text-amber-400 transition-colors cursor-pointer text-left"
                 >
                   Dekorasi Plafon Pelaminan VIP
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setActiveCustomerTab('catalog')}
-                  className="hover:text-amber-400 transition-colors"
+                  onClick={() => {
+                    if (userRole === 'admin') setUserRole('customer');
+                    setActiveCustomerTab('catalog');
+                    const soundSrv = services.find(s => s.category === 'sound');
+                    if (soundSrv) setSelectedServiceForBooking(soundSrv);
+                    const el = document.getElementById('catalog-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hover:text-amber-400 transition-colors cursor-pointer text-left"
                 >
                   Sound System & Line Array Audio
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setActiveCustomerTab('catalog')}
-                  className="hover:text-amber-400 transition-colors"
+                  onClick={() => {
+                    if (userRole === 'admin') setUserRole('customer');
+                    setActiveCustomerTab('catalog');
+                    const paketSrv = services.find(s => s.category === 'paket');
+                    if (paketSrv) setSelectedServiceForBooking(paketSrv);
+                    const el = document.getElementById('catalog-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hover:text-amber-400 transition-colors cursor-pointer text-left"
                 >
                   Paket Komplit Pernikahan & Pesta
                 </button>

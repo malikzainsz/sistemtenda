@@ -47,7 +47,7 @@ export const CatalogManagerView: React.FC = () => {
       totalStock: newStock,
       availableStock: newStock,
       features: ['Pemasangan oleh kru profesional', 'Bahan terawat dan bersih', 'Garansi unit siap pakai'],
-      imageUrl: '/src/assets/images/service_tenda_acara_1792526784809.jpg',
+      imageUrl: '/images/service_tenda_acara.jpg',
     });
 
     setShowAddModal(false);
